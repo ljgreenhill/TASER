@@ -1,0 +1,46 @@
+    <div data-role="page" id="updateTask" data-theme="a">
+    
+      <div data-role="popup" id="errorTaskStatus" data-theme="b" data-overlay-theme="b" data-shadow="true" data-dismissible="false" style="max-width:300px;">
+      
+        <div data-role="header" data-icon="alert">
+          <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-shadow ui-btn-icon-notext ui-icon-alert"></a>
+          <h2>Error</h2>
+        </div>
+        
+        <div role="main" class="ui-content" align="center">
+          <h4 class="ui-title">Complete all fields.</h4>
+          <p></p>
+          <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-shadow ui-btn-b" data-rel="back">OK</a>
+        </div>
+        
+      </div>
+    
+     
+      <div data-role="main" class="ui-content">
+      
+        <fieldset data-role="controlgroup" data-type="vertical">
+        
+          <select id="selectLiveTask" name="selectLiveTask" data-native-menu="false" data-icon="" data-iconpos="left">
+            <option value="" data-placeholder="true">Select Task</option>
+            
+            
+          </select>
+          
+          <select id="selectStatus" name="selectStatus" data-native-menu="false" data-icon="" data-iconpos="left">
+            <option value="" data-placeholder="true">Select Status</option>
+            <option value="Finish">Finish</option>
+            <option value="Resume">Resume</option>
+         
+          </select>
+                        
+          <a href="#"
+             data-role="button" 
+             class="ui-btn ui-corner-all ui-shadow ui-alt-icon ui-nodisc-icon ui-icon-power ui-btn-icon-notext"
+             id="buttonUpdateTask"
+             onclick="updateTask();">&nbsp;</a>
+               
+        </fieldset>
+      
+      </div>
+      
+    </div> <!--welcome>
