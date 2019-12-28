@@ -1,0 +1,289 @@
+<script>
+google.script.run.withSuccessHandler(js_createTaskDropDown).gs_getTasksFromSheet();
+google.script.run.withSuccessHandler(js_createContingentTaskDropDown).gs_getTasksFromSheet();
+google.script.run.withSuccessHandler(js_createLiveTaskDropDown).gs_getLiveTasksFromSheet();
+
+
+
+function js_storeAvailableTasks( tasks ) {  
+                     
+  google.script.run.gs_storeAvailableTasks( tasks );
+                                                                 
+}
+
+function addAvailableTaskList(task_id, number_people){
+  var arrayAvailableTask = [];
+  var i = 0;
+  for (i=0;i<number_people;i++){
+    arrayAvailableTask.push(task_id); 
+  }
+  
+  js_storeAvailableTasks(arrayAvailableTask);
+     
+}
+
+function leaveWelcome() {
+
+  var role     = $("#selectRole option:selected").val()
+  var id       = $("#selectID option:selected").val()
+
+
+if (role != "" && id != "") {
+
+  console.log(role);
+  if (role == "Create Task"){
+    $(':mobile-pagecontainer').pagecontainer('change', '#createTask', { transition: 'fade'} );
+  }
+  if (role == "Find Task"){
+    $(':mobile-pagecontainer').pagecontainer('change', '#findTask', { transition: 'fade'} );
+  }
+  if (role == "Update Task"){
+    $(':mobile-pagecontainer').pagecontainer('change', '#updateTask', { transition: 'fade'} );
+  }
+  if (role == "View Chart"){
+    google.charts.load('current', {'packages':['gantt']});
+    google.charts.setOnLoadCallback(drawChart);
+  }
+
+  } else {
+    $("#welcomeError").popup("open");
+  }
+
+}
+
+function updatedTask() {
+
+  var liveTask     = $("#selectLiveTask option:selected").val()
+  var status       = $("#selectStatus option:selected").val()
+
+
+  if (liveTask != "" && status != "") {
+
+    $(':mobile-pagecontainer').pagecontainer('change', '#welcome', { transition: 'fade'} );
+
+  } else {
+
+    $("#errorTaskStatus").popup("open");
+
+  }
+
+}
+
+function the_time_is_now() {
+  var d          = new Date();
+  var nowYear    = d.getFullYear();
+  var nowMonth   = ("0" + (d.getMonth()+1)).slice(-2);
+  var nowDay     = ("0" + d.getDate()).slice(-2);
+  var nowHours   = d.getHours();
+  var nowMinutes = d.getMinutes();
+  var nowSeconds = ("0" + d.getSeconds()).slice(-2);
+  var nowMillis  = d.getMilliseconds();
+  var time_stamp = nowYear + "-" + nowMonth + "-" + nowDay + " " + nowHours + ":" + nowMinutes + ":" + nowSeconds + ":" + nowMillis;
+    
+  return time_stamp;
+}
+
+function creatingTask() {
+  var task_id = $("#textarea-name").val()
+  var machinery = $("#selectTool").val()
+  var machinery_time = $("#timeToolSelecter").val()
+  var textarea_description = $("#textarea-description").val()
+  var contingent_tasks_array = $("#selectContingentTask").val()
+  var contingent_tasks = ""
+  console.log(contingent_tasks);
+  if(contingent_tasks != ""){
+    for ( var i = 0; i < contingent_tasks_array.length; i++ ) {
+      var x = contingent_tasks_array[i]
+        if(i>0){
+          contingent_tasks = contingent_tasks + "-" + contingent_tasks_array[i]
+        }
+        else{
+          contingent_tasks = contingent_tasks + contingent_tasks_array[i]
+        }
+    }
+  }
+  
+  var time = $("#timeSelecter").val()
+  var number_people = $("#selectNumberPeople").val()
+
+  if (task_id != "" && time != "" && number_people != " ") {
+    
+    js_addMatchMetric( task_id, "MACHINERY", machinery );
+  
+    js_addMatchMetric( task_id, "MACHINERY_TIME", machinery_time );
+  
+    js_addMatchMetric( task_id, "DESCRIPTION", textarea_description );
+  
+    js_addMatchMetric( task_id, "CONTINGENT_TASKS", contingent_tasks );
+  
+    js_addMatchMetric( task_id, "TOTAL_TIME", time );
+  
+    js_addMatchMetric( task_id, "NUMBER_PEOPLE", number_people );
+
+    addAvailableTaskList(task_id, number_people);
+    $(':mobile-pagecontainer').pagecontainer('change', '#welcome', { transition: 'fade'} );
+  }
+  else{
+    $("#createTaskError").popup("open");
+  }
+      
+}
+
+
+
+function js_addMatchMetric( task_id, metric_id, metric_val ) {  
+          
+  var time_stamp = the_time_is_now(),
+      js_arr_match_metric_data = [];
+  
+  var person = $("#selectID").val()
+  
+                               
+  js_arr_match_metric_data = [ time_stamp, person, task_id, metric_id, metric_val ];
+
+  console.log(js_arr_match_metric_data)
+
+  google.script.run.gs_addMatchMetric( js_arr_match_metric_data );        
+}
+
+  function js_createContingentTaskDropDown( arr_tasks ) {
+  
+    if ( arr_tasks.length > 0 ) {
+      
+      $("#selectContingentTask option:first").text("Task")
+    
+      $.each(arr_tasks, function(key, value) {
+        $('#selectContingentTask').append($("<option/>", {
+          value: value,
+          text: value
+        })).selectmenu().selectmenu("refresh");
+      });
+       
+    }
+      
+    if ( arr_tasks.length == 0 ) {
+    
+      $("#selectContingentTask").find("option").eq(0).remove();
+      $(this).find('[value="Loading..."]').remove();
+      
+      $('#selectContingentTask').append($("<option/>", {
+        value: "TASKS_MISSING",
+        text: "No Tasks Loaded"
+        }, "</option>")).selectmenu().selectmenu("refresh");
+        
+    }
+  
+  }
+  
+function js_createTaskDropDown( arr_tasks ) {
+  
+    if ( arr_tasks.length > 0 ) {
+      
+      $("#selectAvailableTask option:first").text("Task")
+
+      const arr_tasks_unique = [...new Set(arr_tasks)];
+    
+      $.each(arr_tasks_unique, function(key, value) {
+        $('#selectAvailableTask').append($("<option/>", {
+          value: value,
+          text: value
+        })).selectmenu().selectmenu("refresh");
+      });
+       
+    }
+      
+    if ( arr_tasks.length == 0 ) {
+    
+      $("#selectAvailableTask").find("option").eq(0).remove();
+      $(this).find('[value="Loading..."]').remove();
+      
+      $('#selectAvailableTask').append($("<option/>", {
+        value: "TASKS_MISSING",
+        text: "No Tasks Loaded"
+        }, "</option>")).selectmenu().selectmenu("refresh");
+        
+    }
+  
+  }
+
+function js_createDescription( description) {
+  
+  document.getElementById('description').innerHTML = "Description: " + description;
+  
+}
+
+function js_createMachinery( machinery) {
+
+  if(machinery != ""){
+    document.getElementById('machinery').innerHTML = "Machinery Needed: " + machinery;
+  }
+  else{
+    document.getElementById('machinery').innerHTML = "No machinery needed";
+  }
+}
+  
+function viewTask(){
+
+  var task_id = $("#selectAvailableTask").val()
+  google.script.run.withSuccessHandler(js_createDescription).gs_getDescriptionFromSheet(task_id, "DESCRIPTION");
+  google.script.run.withSuccessHandler(js_createMachinery).gs_getDescriptionFromSheet(task_id, "MACHINERY");
+  
+}
+
+function acceptTask(){
+  var task_id = $("#selectAvailableTask").val()
+  js_addMatchMetric( task_id, "UPDATE_TASK", "ACCEPT" );
+  google.script.run.gs_addLiveTask(task_id);
+  google.script.run.gs_deleteTask(task_id);
+}
+
+function js_createLiveTaskDropDown( arr_tasks ) {
+  
+    if ( arr_tasks.length > 0 ) {
+      
+      $("#selectLiveTask option:first").text("Task")
+
+      const arr_tasks_unique = [...new Set(arr_tasks)];
+    
+      $.each(arr_tasks_unique, function(key, value) {
+        $('#selectLiveTask').append($("<option/>", {
+          value: value,
+          text: value
+        })).selectmenu().selectmenu("refresh");
+      });
+       
+    }
+      
+    if ( arr_tasks.length == 0 ) {
+    
+      $("#selectLiveTask").find("option").eq(0).remove();
+      $(this).find('[value="Loading..."]').remove();
+      
+      $('#selectLiveTask').append($("<option/>", {
+        value: "TASKS_MISSING",
+        text: "No Tasks Loaded"
+        }, "</option>")).selectmenu().selectmenu("refresh");
+        
+    }
+  
+  }
+
+function updateTask() {
+
+  var status     = $("#selectStatus option:selected").val()
+  var task_id = $("#selectLiveTask option:selected").val()
+
+  if (status == "Finish"){
+    js_addMatchMetric( task_id, "UPDATE_TASK", "FINISH" );
+    google.script.run.gs_storeCompletedTasks(task_id);
+    google.script.run.gs_deleteLiveTask(task_id);
+  }
+ 
+
+  
+
+}
+
+
+  
+  </script>
