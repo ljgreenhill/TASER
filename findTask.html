@@ -1,0 +1,38 @@
+    <div data-role="page" id="findTask" data-theme="a">
+    
+      <div data-role="popup" id="errorTaskStatus" data-theme="b" data-overlay-theme="b" data-shadow="true" data-dismissible="false" style="max-width:300px;">
+      
+        <div data-role="header" data-icon="alert">
+          <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-shadow ui-btn-icon-notext ui-icon-alert"></a>
+          <h2>Error</h2>
+        </div>
+        
+        <div role="main" class="ui-content" align="center">
+          <h4 class="ui-title">Please select a task.</h4>
+          <p></p>
+          <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-shadow ui-btn-b" data-rel="back">OK</a>
+        </div>
+        
+      </div>
+    
+     
+      <div data-role="main" class="ui-content">
+      
+        <fieldset data-role="controlgroup" data-type="vertical">
+        
+          <select id="selectAvailableTask"  name="selectAvailableTask" data-native-menu="false" data-icon="tag" data-iconpos="left">
+                      <option value="" data-placeholder="true">Loading...</option>
+           </select>
+           
+                        
+          <a href="#viewTask"
+             data-role="button" 
+             class="ui-btn ui-corner-all ui-shadow ui-alt-icon ui-nodisc-icon ui-icon-arrow-r ui-btn-icon-notext"
+             id="buttonSelectTask"
+             onclick="viewTask();">&nbsp;</a>
+               
+        </fieldset>
+      
+      </div>
+      
+    </div> <!--welcome>
