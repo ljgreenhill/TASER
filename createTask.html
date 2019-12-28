@@ -1,0 +1,166 @@
+   <div data-role="page" id="createTask" data-theme="a">
+    
+       <div data-role="popup" id="createTaskError" data-theme="b" data-overlay-theme="b" data-shadow="true" data-dismissible="false" style="max-width:300px;">
+      
+        <div data-role="header" data-icon="alert">
+          <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-shadow ui-btn-icon-notext ui-icon-alert"></a>
+          <h2>Error</h2>
+        </div>
+        
+        <div role="main" class="ui-content" align="center">
+          <h4 class="ui-title">Please select.</h4>
+          <p></p>
+          <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-shadow ui-btn-b" data-rel="back">OK</a>
+        </div>
+        
+      </div>
+      
+      <div data-role="main" class="content">
+      
+        <div data-role="tabs" id="tabs">
+        
+          <div data-role="navbar">
+            <ul>
+              <li><a href="#tabContingentTasks" data-ajax="false">Contingent Tasks</a></li>
+              <li><a href="#tabTools" data-ajax="false">Machinery</a></li>
+              <li><a href="#tabTime" data-ajax="false">Estimated Total Time</a></li>
+              <li><a href="#tabDescription" data-ajax="false">Description</a></li>
+
+            </ul>
+          </div>
+          
+          <div id="tabTools" class="ui-content">
+            <ul data-role="listview">
+              <li>
+                <form>
+                  <fieldset data-role="controlgroup" data-type="horizontal">
+                        
+                  <select id="selectTool" name="selectTool" data-native-menu="false" data-icon="gear" data-iconpos="left">
+                    <option value="" data-placeholder="true">Select the machinery needed for this task: </option>
+                    <option value="CNC">CNC</option>
+                    <option value="Mill">Mill</option>
+                    <option value="3D Printer">3D Printer</option>
+                    <option value="Drill Press">Drill Press</option>
+                    <option value="Band Saw">Band Saw</option>
+                    <option value="None">None</option>
+                  </select>
+                  
+                    <select name="timeToolSelecter" id="timeToolSelecter" class="form-control bmg-hrs-mins-input">
+                    <option value="" data-placeholder="true">0 </option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="50">50</option>
+                    <option value="60">60</option>
+                    <option value="70">70</option>
+                    <option value="80">80</option>
+                    <option value="90">90</option>
+                    <option value="100">100</option>
+                    <option value="110">110</option>
+                    <option value="120">120</option>
+                    <option value="150">150</option>
+                    <option value="200">200</option>
+                    <option value="240">240</option>
+                    </select>
+
+                  
+                 </fieldset>
+      
+                </form>
+              </li>
+            </ul>
+          </div>
+          
+          <div id="tabTime" class="ui-content">
+            <ul data-role="listview">
+              <li>
+                <form>
+                  <fieldset data-role="controlgroup" data-type="horizontal">
+                        
+                    <select name="timeSelecter" id="timeSelecter" class="form-control bmg-hrs-mins-input">
+                    <option value="" data-placeholder="true">5 </option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="50">50</option>
+                    <option value="60">60</option>
+                    <option value="70">70</option>
+                    <option value="80">80</option>
+                    <option value="90">90</option>
+                    <option value="100">100</option>
+                    <option value="110">110</option>
+                    <option value="120">120</option>
+                    <option value="150">150</option>
+                    <option value="200">200</option>
+                    <option value="240">240</option>
+           
+                    </select>
+                     
+              
+                 </fieldset>
+      
+                </form>
+              </li>
+            </ul>
+          </div>
+          
+          <div id="tabContingentTasks" class="ui-content">
+            <ul data-role="listview">
+              <li>
+                <form>
+                  <fieldset data-role="controlgroup" data-type="horizontal">
+                        
+                    <select id="selectContingentTask" multiple="multiple" name="selectContingentTask" data-native-menu="false" data-icon="tag" data-iconpos="left">
+                      <option value="" data-placeholder="true">Loading...</option>
+                    </select>
+
+              
+                 </fieldset>
+      
+                </form>
+              </li>
+            </ul>
+          </div>
+          
+          
+        
+          <div id="tabDescription">
+            <ul data-role="listview">
+              <li data-role="list-divider">Name of task:</li>
+              <li>
+                <textarea cols="10" name="textarea-name" id="textarea-name"></textarea>
+              </li>
+              <li data-role="list-divider">Detailed description of task:</li>
+              <li>
+                <textarea cols="40" name="textarea-description" id="textarea-description"></textarea>
+              </li>
+              
+               <select id="selectNumberPeople" name="selectNumberPeople" data-native-menu="false" data-icon="user" data-iconpos="left">
+                    <option value="" data-placeholder="true">Number of people required for task: </option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                  </select>
+                  
+               <a   href = "javascript:void(0)"
+                    data-role="button" 
+                    class="ui-btn ui-corner-all ui-shadow ui-alt-icon ui-nodisc-icon ui-icon-check ui-btn-icon-notext"
+                    id="buttonAddDescription"
+                    onclick="creatingTask();">&nbsp;</a>
+            </ul>
+          </div>
+          
+      
+        </div>
+      </div>
+    </div>
