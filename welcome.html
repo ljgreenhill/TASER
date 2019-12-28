@@ -1,0 +1,50 @@
+    <div data-role="page" id="welcome" data-theme="a">
+    
+      <div data-role="popup" id="welcomeError" data-theme="b" data-overlay-theme="b" data-shadow="true" data-dismissible="false" style="max-width:300px;">
+      
+        <div data-role="header" data-icon="alert">
+          <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-shadow ui-btn-icon-notext ui-icon-alert"></a>
+          <h2>Error</h2>
+        </div>
+        
+        <div role="main" class="ui-content" align="center">
+          <h4 class="ui-title">Please select.</h4>
+          <p></p>
+          <a href="#" class="ui-btn ui-btn-inline ui-corner-all ui-shadow ui-btn-b" data-rel="back">OK</a>
+        </div>
+        
+      </div><!-- /popup: popup-match_info_error -->
+    
+      <div data-role="header" data-hide-during-focus="">
+        <h1>TASER</h1>
+      </div>
+      
+      <div data-role="main" class="ui-content">
+      
+        <fieldset data-role="controlgroup" data-type="vertical">
+        
+          <select id="selectID" name="selectID" data-native-menu="false" data-icon="user" data-iconpos="left">
+            <option value="" data-placeholder="true">Select Name</option>
+            <option value="Person 1">Person 1</option>
+            <option value="Person 2">Person 2</option>
+            <option value="Person 3">Person 3</option>
+          </select>
+                        
+          <select id="selectRole" name="selectRole" data-native-menu="false" data-icon="info" data-iconpos="left">
+            <option value="" data-placeholder="true">Select Role</option>
+            <option value="Find Task">Find Task</option>
+            <option value="Create Task">Create Task</option>
+            <option value="Update Task">Update Task</option>
+          </select>
+         
+          <a href="#"
+             data-role="button" 
+             class="ui-btn ui-corner-all ui-shadow ui-alt-icon ui-nodisc-icon ui-icon-power ui-btn-icon-notext"
+             id="button-welcome"
+             onclick="leaveWelcome();">&nbsp;</a>
+               
+        </fieldset>
+      
+      </div>
+      
+    </div> <!--welcome>
